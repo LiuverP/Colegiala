@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>COLEGI4L4S 👩🏻‍🏫🔞</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <style>
@@ -25,6 +25,8 @@
       height: 44px;
       border-radius: 50%;
       margin-right: 12px;
+      user-select: none;
+      pointer-events: none;
     }
     .group-name {
       font-size: 17px;
@@ -38,7 +40,7 @@
       display: none;
       flex-direction: column;
       padding: 15px;
-      height: calc(100vh - 160px);
+      height: calc(100vh - 190px);
       overflow-y: auto;
     }
     .user {
@@ -51,6 +53,8 @@
       height: 40px;
       border-radius: 50%;
       margin-right: 10px;
+      user-select: none;
+      pointer-events: none;
     }
     .bubble {
       background-color: #2e3a48;
@@ -61,11 +65,22 @@
       line-height: 1.4;
       word-break: break-word;
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+      position: relative;
     }
-    .bubble img {
-      max-width: 100%;
+    .spoiler {
+      filter: blur(10px);
+      cursor: pointer;
+      user-select: none;
+      pointer-events: auto;
+      transition: filter 0.3s ease;
       border-radius: 10px;
+      max-width: 100%;
       margin-top: 8px;
+      display: block;
+    }
+    .spoiler-unblurred {
+      filter: none !important;
+      pointer-events: auto;
     }
     .footer {
       position: fixed;
@@ -74,6 +89,7 @@
       background: #1f1f26;
       text-align: center;
       padding: 10px 15px;
+      user-select: none;
     }
     .share-btn,
     .join-btn {
@@ -85,6 +101,13 @@
       color: white;
       cursor: pointer;
       margin-top: 8px;
+      user-select: none;
+      box-shadow: 0 0 10px rgba(0,168,132,0.7);
+      transition: background 0.3s ease;
+    }
+    .share-btn:hover,
+    .join-btn:hover {
+      background: #007a63;
     }
     .join-btn {
       background: #28a745;
@@ -92,21 +115,14 @@
       animation: pulse 2s infinite;
     }
     .join-btn:before {
-      content: '😈';
+      content: '\f2c6'; /* Icono Telegram de FontAwesome */
+      font-family: 'Font Awesome 6 Brands';
       position: absolute;
-      top: -8px;
-      right: -10px;
-      font-size: 18px;
+      top: 6px;
+      left: 14px;
+      font-size: 20px;
+      color: white;
       animation: float 1.5s infinite;
-    }
-    #lockedMsg {
-      color: #ff4b4b;
-      font-weight: bold;
-    }
-    #counter {
-      color: #ffffff;
-      margin-top: 5px;
-      font-size: 13px;
     }
     @keyframes float {
       0% { transform: translateY(0); }
@@ -118,17 +134,27 @@
       70% { box-shadow: 0 0 0 10px rgba(40, 167, 69, 0); }
       100% { box-shadow: 0 0 0 0 rgba(40, 167, 69, 0); }
     }
-    .spoiler {
-      filter: blur(10px);
-      cursor: pointer;
-      transition: filter 0.3s;
+    #lockedMsg {
+      color: #ff4b4b;
+      font-weight: bold;
+      user-select: none;
     }
-    .spoiler:hover {
-      filter: blur(5px);
+    #counter {
+      color: #ffffff;
+      margin-top: 5px;
+      font-size: 13px;
+      user-select: none;
+    }
+    #timer {
+      margin-top: 5px;
+      font-size: 14px;
+      color: #ccc;
+      user-select: none;
     }
   </style>
 </head>
-<body>
+<body oncontextmenu="return false">
+
   <header>
     <img src="https://imageshack.com/i/pn8Ue8i4j" alt="Grupo" />
     <div>
@@ -141,30 +167,41 @@
   </header>
 
   <div class="chat-area" id="chatArea">
+
     <div class="user">
-      <img class="avatar" src="https://randomuser.me/api/portraits/women/18.jpg" alt="Camila" />
+      <img class="avatar" src="https://imageshack.com/i/pn889Wqvj" alt="Camila" draggable="false" />
       <div class="bubble">
         <strong>Camila🔥:</strong> Waooo 😍 sí funciona, compartan para desbloquear
       </div>
     </div>
 
     <div class="user">
-      <img class="avatar" src="https://randomuser.me/api/portraits/men/11.jpg" alt="Luis" />
+      <img class="avatar" src="https://imageshack.com/i/pm0n7zg4j" alt="Luis" draggable="false" />
       <div class="bubble">
         <strong>Luis:</strong> Contenido 🔞<br />
-        <span class="spoiler" onclick="this.classList.remove('spoiler')">
-          <img src="https://imageshack.com/i/poYsPz8Pj" alt="spoiler" />
-        </span>
+        <img
+          src="https://imageshack.com/i/poYsPz8Pj"
+          alt="spoiler"
+          class="spoiler"
+          draggable="false"
+          onclick="this.classList.toggle('spoiler-unblurred')"
+          oncontextmenu="return false"
+        />
       </div>
     </div>
 
     <div class="user">
-      <img class="avatar" src="https://randomuser.me/api/portraits/women/35.jpg" alt="Melany" />
+      <img class="avatar" src="https://randomuser.me/api/portraits/women/35.jpg" alt="Melany" draggable="false" />
       <div class="bubble">
         <strong>Melany👀:</strong> Video exclusivo 😈<br />
-        <span class="spoiler" onclick="this.classList.remove('spoiler')">
-          <img src="https://imageshack.com/i/pn1FNsAWj" alt="video" />
-        </span>
+        <img
+          src="https://imageshack.com/i/pn1FNsAWj"
+          alt="video"
+          class="spoiler"
+          draggable="false"
+          onclick="this.classList.toggle('spoiler-unblurred')"
+          oncontextmenu="return false"
+        />
         <div style="font-size: 12px; color: #ccc">
           <i class="fa fa-download"></i> 32.1 MB - 1:05
         </div>
@@ -172,29 +209,62 @@
     </div>
 
     <div class="user">
-      <img class="avatar" src="https://imageshack.com/i/pnuk6aaVj" alt="Valeria" />
+      <img class="avatar" src="https://imageshack.com/i/pnuk6aaVj" alt="Valeria" draggable="false" />
       <div class="bubble">
         <strong>Valeria 🥵 contenido exclusivo:</strong><br />
-        <span class="spoiler" onclick="this.classList.remove('spoiler')">
-          <img src="https://imageshack.com/i/pmzLcCL0j" alt="Contenido exclusivo" />
-        </span>
+        <img
+          src="https://imageshack.com/i/pmzLcCL0j"
+          alt="Contenido exclusivo"
+          class="spoiler"
+          draggable="false"
+          onclick="this.classList.toggle('spoiler-unblurred')"
+          oncontextmenu="return false"
+        />
       </div>
     </div>
 
-    <!-- Nuevo usuario: SexBoy 😈 -->
+    <!-- Usuarios nuevos callejeros - reemplaza las fotos según quieras -->
     <div class="user">
-      <img class="avatar" src="https://imageshack.com/i/potNsoSmj" alt="SexBoy" />
+      <img class="avatar" src="https://imageshack.com/i/pnOwAm58j" alt="Javi" draggable="false" />
       <div class="bubble">
-        <strong>SexBoy 😈:</strong> Únanse todos que se pone bueno 🔥🔥
+        <strong>Javi 🤟:</strong> Aquí rulando con la crew, ¿quién más? 🧢🔥
       </div>
     </div>
+
+    <div class="user">
+      <img class="avatar" src="https://imageshack.com/i/pnN6yI0Bj" alt="Tamy" draggable="false" />
+      <div class="bubble">
+        <strong>Lia🍹:</strong> Algun chico para chat?
+      </div>
+    </div>
+
+    <div class="user">
+      <img class="avatar" src="https://imageshack.com/i/pnZJv90Dj" alt="Leo" draggable="false" />
+      <div class="bubble">
+        <strong>Leo 🔥:</strong> ¿Ya vieron la sorpresa? Aquí está lo bueno!
+      </div>
+    </div>
+
+    <div class="user">
+      <img class="avatar" src="https://imageshack.com/i/poQzsm34j" alt="Meli" draggable="false" />
+      <div class="bubble">
+        <strong>Meli 💃:</strong> Más exclusivo para los que se animan 😉
+      </div>
+    </div>
+
   </div>
 
   <div class="footer">
     <div id="lockedMsg">Chat bloqueado - debes compartir 3 veces para desbloquear</div>
     <div id="counter">Compartido: <span id="sharedCount">0</span>/3</div>
     <button id="shareBtn" class="share-btn">Compartir en Telegram</button>
-    <button id="joinBtn" class="join-btn" style="display: none;" onclick="window.location.href='https://t.me/addlist/Pk5dafooIwE0NDAx'">
+    <div id="timer">Tiempo restante: <span id="timeLeft">40</span> s</div>
+    <button
+      id="joinBtn"
+      class="join-btn"
+      style="display: none;"
+      onclick="window.location.href='https://t.me/addlist/Pk5dafooIwE0NDAx'"
+    >
       Unirme al grupo
     </button>
   </div>
@@ -203,6 +273,8 @@
     let shared = 0;
     let members = 180000;
     let online = 2652;
+    let timeLeft = 40;
+    let timerInterval;
 
     const shareBtn = document.getElementById('shareBtn');
     const joinBtn = document.getElementById('joinBtn');
@@ -210,8 +282,24 @@
     const membersEl = document.getElementById('membersCount');
     const onlineEl = document.getElementById('onlineCount');
     const counter = document.getElementById('sharedCount');
+    const timerEl = document.getElementById('timeLeft');
+    const timerContainer = document.getElementById('timer');
+
+    function startTimer() {
+      timerContainer.style.display = 'block';
+      timerInterval = setInterval(() => {
+        timeLeft--;
+        timerEl.textContent = timeLeft;
+        if (timeLeft <= 0) {
+          clearInterval(timerInterval);
+          shareBtn.style.display = 'none';
+          timerContainer.textContent = 'Tiempo agotado, por favor recarga la página.';
+        }
+      }, 1000);
+    }
 
     shareBtn.onclick = () => {
+      if (timeLeft <= 0) return;
       shared++;
       window.open(
         "https://t.me/share/url?url=🔥🔞𝗦𝗢𝗟𝗢 𝗘𝗡𝗧𝗥𝗔𝗡 𝗟𝗢𝗦 𝗣𝗥𝗜𝗠𝗘𝗥𝗢𝗦 100 😈👉 http://t.me/WebPrivadaBot/Chat",
@@ -219,8 +307,10 @@
       );
       counter.textContent = shared;
       if (shared >= 3) {
+        clearInterval(timerInterval);
         document.getElementById('lockedMsg').style.display = 'none';
         document.getElementById('counter').style.display = 'none';
+        timerContainer.style.display = 'none';
         shareBtn.style.display = 'none';
         joinBtn.style.display = 'inline-block';
         chatArea.style.display = 'flex';
@@ -233,6 +323,25 @@
       membersEl.textContent = members.toLocaleString();
       onlineEl.textContent = online.toLocaleString();
     }, 4000);
+
+    // Iniciar temporizador al cargar la página
+    startTimer();
+
+    // Protección contra clic derecho en todo el documento
+    document.addEventListener('contextmenu', e => {
+      if (
+        e.target.classList.contains('spoiler') ||
+        e.target.classList.contains('spoiler-unblurred')
+      ) {
+        e.preventDefault();
+      }
+    });
+
+    // Evitar drag en las imágenes spoiler
+    document.querySelectorAll('.spoiler, .spoiler-unblurred').forEach(img => {
+      img.addEventListener('dragstart', e => e.preventDefault());
+    });
   </script>
 </body>
-</html>
+  </html>
+  
