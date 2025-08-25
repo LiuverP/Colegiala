@@ -69,12 +69,13 @@ const timerContainer = document.getElementById('timer');
 const messages = [
   {name:"Camila🔥",avatar:"https://imageshack.com/i/pn889Wqvj",text:"Waooo 😍 sí funciona, compartan para desbloquear"},
   {name:"Luis",avatar:"https://imageshack.com/i/pm0n7zg4j",text:"Contenido 🔞",spoiler:"https://imageshack.com/i/poYsPz8Pj"},
-  {name:"Melany👀",avatar:"https://randomuser.me/api/portraits/women/35.jpg",text:"Video exclusivo 😈",spoiler:"https://imageshack.com/i/pn1FNsAWj"},
-  {name:"Valeria 🥵",avatar:"https://imageshack.com/i/pnuk6aaVj",text:"Contenido exclusivo",spoiler:"https://imageshack.com/i/pmzLcCL0j"},
-  {name:"Ana💜",avatar:"https://randomuser.me/api/portraits/women/41.jpg",text:"Chicos, esto es lo mejor 😏🔥"},
-  {name:"Juan😎",avatar:"https://randomuser.me/api/portraits/men/42.jpg",text:"Alguien más ya desbloqueó?"},
+  {name:"Melany👀",avatar:"https://imageshack.com/i/pn1FNsAWj",text:"Video exclusivo 😈",spoiler:"https://imageshack.com/i/pn1FNsAWj"},
+  {name:"Valeria 🥵",avatar:"https://imageshack.com/i/pmzLcCL0j",text:"Contenido exclusivo",spoiler:"https://imageshack.com/i/pmzLcCL0j"},
+  {name:"Ana💜",avatar:"https://imageshack.com/i/pooBesOfj",text:"Chicos, esto es lo mejor 😏🔥"},
+  {name:"Juan😎",avatar:"https://imageshack.com/i/pm0n7zg4j",text:"Alguien más ya desbloqueó?"},
   {name:"Lucía👀",avatar:"https://randomuser.me/api/portraits/women/43.jpg",text:"Estoy escribiendo...",typing:true},
-  {name:"Kevin🔥",avatar:"https://randomuser.me/api/portraits/men/44.jpg",text:"Wow esto está 🔥🔥"}
+  {name:"Kevin🔥",avatar:"https://imageshack.com/i/pn3HqqM4j",text:"Wow esto está 🔥🔥"},
+  {name:"Lisa 💋",avatar:"https://imageshack.com/i/pmXWHv2vj",text:"Chicos, esto es increíble 😍"}
 ];
 
 function startTimer(){
@@ -89,7 +90,7 @@ startTimer();
 shareBtn.onclick=()=>{
   if(timeLeft<=0)return;
   shared++;
-  window.open("https://t.me/share/url?url=🔥🔞𝗦𝗢𝗟𝗢 𝗘𝗡𝗧𝗥𝗔𝗡 𝗟𝗢𝗦 𝗣𝗥𝗜𝗠𝗘𝗥𝗢𝗦 100 😈👉 http://t.me/WebPrivadaBot/Chat","_blank");
+  window.open("https://t.me/share/url?url=http://t.me/WebPrivadaBot/Chat","_blank");
   counter.textContent=shared;
   if(shared>=3){
     lockedMsg.style.display='none';
