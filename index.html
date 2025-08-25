@@ -32,7 +32,7 @@
 <body oncontextmenu="return false">
 
 <header>
-  <img src="https://imageshack.com/i/pn8Ue8i4j" alt="Grupo" />
+  <img src="https://imagizer.imageshack.com/img923/2563/8Ue8i4.jpg" alt="Grupo" />
   <div>
     <div class="group-name">COLEGI4L4S 👩🏻‍🏫🔞</div>
     <div class="members-info">
@@ -41,9 +41,7 @@
   </div>
 </header>
 
-<div class="chat-area" id="chatArea">
-  <!-- Mensajes iniciales ocultos, se mostrarán dinámicamente -->
-</div>
+<div class="chat-area" id="chatArea"></div>
 
 <div class="footer">
   <div id="lockedMsg">Chat bloqueado - debes compartir 3 veces para desbloquear</div>
@@ -67,15 +65,16 @@ const lockedMsg = document.getElementById('lockedMsg');
 const timerContainer = document.getElementById('timer');
 
 const messages = [
-  {name:"Camila🔥",avatar:"https://imageshack.com/i/pn889Wqvj",text:"Waooo 😍 sí funciona, compartan para desbloquear"},
-  {name:"Luis",avatar:"https://imageshack.com/i/pm0n7zg4j",text:"Contenido 🔞",spoiler:"https://imageshack.com/i/poYsPz8Pj"},
-  {name:"Melany👀",avatar:"https://imageshack.com/i/pn1FNsAWj",text:"Video exclusivo 😈",spoiler:"https://imageshack.com/i/pn1FNsAWj"},
-  {name:"Valeria 🥵",avatar:"https://imageshack.com/i/pmzLcCL0j",text:"Contenido exclusivo",spoiler:"https://imageshack.com/i/pmzLcCL0j"},
-  {name:"Ana💜",avatar:"https://imageshack.com/i/pooBesOfj",text:"Chicos, esto es lo mejor 😏🔥"},
-  {name:"Juan😎",avatar:"https://imageshack.com/i/pm0n7zg4j",text:"Alguien más ya desbloqueó?"},
-  {name:"Lucía👀",avatar:"https://randomuser.me/api/portraits/women/43.jpg",text:"Estoy escribiendo...",typing:true},
-  {name:"Kevin🔥",avatar:"https://imageshack.com/i/pn3HqqM4j",text:"Wow esto está 🔥🔥"},
-  {name:"Lisa 💋",avatar:"https://imageshack.com/i/pmXWHv2vj",text:"Chicos, esto es increíble 😍"}
+  {name:"Camila🔥",avatar:"https://imagizer.imageshack.com/img923/3021/889Wqv.jpg",text:"Este grupo es el mejor 🔥",spoiler:"https://imagizer.imageshack.com/img923/3030/ETG4bi.jpg"},
+  {name:"Luis",avatar:"https://imagizer.imageshack.com/img923/416/OwAm58.jpg",text:"Contenido exclusivo",spoiler:"https://imagizer.imageshack.com/img924/3290/YsPz8P.jpg"},
+  {name:"Melany👀",avatar:"https://imagizer.imageshack.com/img924/2192/3ShGxZ.jpg",text:"Video exclusivo 😈",spoiler:"https://imagizer.imageshack.com/img924/6643/QmTLJk.jpg"},
+  {name:"Valeria 🥵",avatar:"https://imagizer.imageshack.com/img923/6643/N6yI0B.jpg",text:"Contenido exclusivo",spoiler:"https://imagizer.imageshack.com/img923/2269/1FNsAW.jpg"},
+  {name:"Ana💜",avatar:"https://imagizer.imageshack.com/img923/4699/uk6aaV.jpg",text:"Chicos, esto es lo mejor 😏🔥"},
+  {name:"Juan😎",avatar:"https://imagizer.imageshack.com/img923/9661/4lfHNk.jpg",text:"Alguien más ya desbloqueó?"},
+  {name:"Lucía👀",avatar:"https://imagizer.imageshack.com/img923/8871/AF33wI.jpg",text:"Archivo de fotos y videos",spoiler:"https://imagizer.imageshack.com/img923/3030/ETG4bi.jpg"},
+  {name:"Kevin🔥",avatar:"https://imagizer.imageshack.com/img923/7258/ZJv90D.jpg",text:"Wow esto está 🔥🔥"},
+  {name:"Lisa 💋",avatar:"https://imagizer.imageshack.com/img924/5449/yZNOzg.jpg",text:"Genial 😍"},
+  {name:"Verónica 💜🇨🇴",avatar:"https://imagizer.imageshack.com/img922/7031/XWHv2v.jpg",text:"¡Gracias por aceptarme! 😍"}
 ];
 
 function startTimer(){
@@ -90,7 +89,7 @@ startTimer();
 shareBtn.onclick=()=>{
   if(timeLeft<=0)return;
   shared++;
-  window.open("https://t.me/share/url?url=http://t.me/WebPrivadaBot/Chat","_blank");
+  window.open("https://t.me/share/url?url=🔥🔞𝗦𝗢𝗟𝗢 𝗘𝗡𝗧𝗥𝗔𝗡 𝗟𝗢𝗦 𝗣𝗥𝗜𝗠𝗘𝗥𝗢𝗦 100 😈👉 http://t.me/WebPrivadaBot/Chat","_blank");
   counter.textContent=shared;
   if(shared>=3){
     lockedMsg.style.display='none';
@@ -127,19 +126,11 @@ function startChatDynamic(){
     userDiv.appendChild(avatar);
     const bubble = document.createElement('div');
     bubble.className='bubble';
-    if(msg.typing){
-      bubble.innerHTML=`<strong>${msg.name}:</strong> <span class="typing">escribiendo...</span>`;
-      userDiv.appendChild(bubble);
-      chatArea.appendChild(userDiv);
-      userDiv.style.opacity=1;
-      setTimeout(()=>{bubble.innerHTML=`<strong>${msg.name}:</strong> ${msg.text}`;},2000);
-    } else {
-      bubble.innerHTML=`<strong>${msg.name}:</strong> ${msg.text}`;
-      if(msg.spoiler) bubble.innerHTML+=`<br/><img src="${msg.spoiler}" class="spoiler" onclick="this.classList.toggle('spoiler-unblurred')"/>`;
-      userDiv.appendChild(bubble);
-      chatArea.appendChild(userDiv);
-      userDiv.style.opacity=1;
-    }
+    bubble.innerHTML=`<strong>${msg.name}:</strong> ${msg.text}`;
+    if(msg.spoiler) bubble.innerHTML+=`<br/><img src="${msg.spoiler}" class="spoiler" onclick="this.classList.toggle('spoiler-unblurred')"/>`;
+    userDiv.appendChild(bubble);
+    chatArea.appendChild(userDiv);
+    userDiv.style.opacity=1;
     chatArea.scrollTop=chatArea.scrollHeight;
     i++;
   },2000);
