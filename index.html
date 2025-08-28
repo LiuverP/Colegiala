@@ -6,27 +6,31 @@
 <title>COLEGI4L4S 👩🏻‍🏫🔞</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 <style>
-  body {background:#23232b;color:#e0e0e0;font-family:'Segoe UI',sans-serif;margin:0;padding:0;}
-  header {display:flex;align-items:center;background:#2c3e50;padding:10px;box-shadow:0 2px 5px rgba(0,0,0,0.4);}
-  header img {width:44px;height:44px;border-radius:50%;margin-right:12px;user-select:none;pointer-events:none;}
-  .group-name {font-size:17px;font-weight:bold;}
-  .members-info {font-size:13px;color:#ccc;}
-  .chat-area {display:none;flex-direction:column;padding:15px;height:calc(100vh-190px);overflow-y:auto;}
-  .user {display:flex;align-items:flex-start;margin-bottom:14px;opacity:0;transition:opacity 0.6s;}
-  .avatar {width:40px;height:40px;border-radius:50%;margin-right:10px;user-select:none;pointer-events:none;}
-  .bubble {background:#2e3a48;padding:10px 14px;border-radius:12px;max-width:78%;font-size:13px;line-height:1.4;word-break:break-word;box-shadow:0 1px 3px rgba(0,0,0,0.2);position:relative;}
-  .spoiler {filter:blur(10px);cursor:pointer;user-select:none;pointer-events:auto;transition:filter 0.3s ease;border-radius:10px;max-width:100%;margin-top:8px;display:block;}
-  .spoiler-unblurred {filter:none !important;pointer-events:auto;}
-  .footer {position:fixed;bottom:0;width:100%;background:#1f1f26;text-align:center;padding:10px 15px;user-select:none;}
-  .share-btn {background:#00a884;border:none;padding:12px 24px;border-radius:30px;font-size:14px;color:#fff;cursor:pointer;margin-top:8px;box-shadow:0 0 10px rgba(0,168,132,0.7);}
-  .share-btn:hover {background:#007a63;}
-  #joinBtn {position:fixed;bottom:10px;left:50%;transform:translateX(-50%);background:#28a745;color:#fff;padding:10px 20px;border-radius:30px;font-size:14px;cursor:pointer;display:none;box-shadow:0 0 10px rgba(40,167,69,0.7);}
-  #joinBtn i {margin-right:6px;}
-  #verVideoBtn {position:fixed;bottom:70px;left:50%;transform:translateX(-50%);background:orange;color:#fff;padding:8px 16px;border-radius:25px;font-size:13px;cursor:pointer;display:none;animation:fadeInOut 2s infinite;}
-  @keyframes fadeInOut {0%,100%{opacity:0.3;}50%{opacity:1;}}
-  #lockedMsg {color:#ff4b4b;font-weight:bold;}
-  #counter,#timer {color:#fff;margin-top:5px;font-size:13px;}
-  .typing {font-style:italic;color:#ccc;font-size:12px;}
+body {background:#23232b;color:#e0e0e0;font-family:'Segoe UI',sans-serif;margin:0;padding:0;}
+header {display:flex;align-items:center;background:#2c3e50;padding:10px;box-shadow:0 2px 5px rgba(0,0,0,0.4);position:relative;z-index:3;}
+header img {width:44px;height:44px;border-radius:50%;margin-right:12px;user-select:none;pointer-events:none;}
+.group-name {font-size:17px;font-weight:bold;}
+.members-info {font-size:13px;color:#ccc;}
+.chat-area {display:none;flex-direction:column;padding:15px;height:calc(100vh - 190px);overflow-y:auto;scroll-behavior:smooth;}
+.user {display:flex;align-items:flex-start;margin-bottom:14px;opacity:0;transform:translateY(10px);transition:opacity 0.6s, transform 0.6s;}
+.avatar {width:40px;height:40px;border-radius:50%;margin-right:10px;user-select:none;pointer-events:none;}
+.bubble {background:#2e3a48;padding:10px 14px;border-radius:12px;max-width:78%;font-size:13px;line-height:1.4;word-break:break-word;box-shadow:0 1px 3px rgba(0,0,0,0.2);position:relative;transition:all 0.5s;}
+.file-info {font-size:11px;color:#aaa;margin-top:3px;}
+.file-info i {margin-right:4px;}
+.spoiler {filter:blur(12px);cursor:pointer;user-select:none;pointer-events:auto;transition:filter 0.6s ease,border-radius 0.3s; border-radius:10px; max-width:100%; margin-top:8px; display:block;}
+.spoiler-unblurred {filter:none !important;pointer-events:auto;}
+.footer {position:fixed;bottom:0;width:100%;text-align:center;padding:10px 15px;user-select:none;z-index:3;background:none;}
+.share-btn {background:#00a884;border:none;padding:12px 24px;border-radius:30px;font-size:14px;color:#fff;cursor:pointer;margin-top:8px;box-shadow:0 0 10px rgba(0,168,132,0.7);}
+.share-btn:hover {background:#007a63;}
+#joinBtn {position:fixed;bottom:10px;left:50%;transform:translateX(-50%);background:#28a745;color:#fff;padding:10px 20px;border-radius:30px;font-size:14px;cursor:pointer;display:none;box-shadow:0 0 10px rgba(40,167,69,0.7);}
+#joinBtn i {margin-right:6px;}
+#verVideoBtn {position:fixed;bottom:70px;left:50%;transform:translateX(-50%);background:orange;color:#fff;padding:8px 16px;border-radius:25px;font-size:13px;cursor:pointer;display:none;animation:fadeInOut 2s infinite;}
+@keyframes fadeInOut {0%,100%{opacity:0.3;}50%{opacity:1;}}
+#lockedMsg {color:#ffff00;font-weight:bold;position:relative;margin-top:50px;text-align:center;font-size:16px;z-index:3;}
+#counter,#timer {color:#fff;margin-top:5px;font-size:13px;text-align:center;background:none;}
+.typing {font-style:italic;color:#ccc;font-size:12px;margin-bottom:5px;}
+.final-msg {position:absolute;top:50%;left:50%;transform:translate(-50%, -50%);text-align:center;font-weight:bold;color:#d0d0d0;font-size:14px;z-index:4;}
+#lockCover {position:absolute;top:0;left:0;width:100%;height:100%;background:url('https://imagizer.imageshack.com/img922/6641/p6Zpnp.jpg') center/cover no-repeat;z-index:1;opacity:0.8;transition:opacity 1s ease;}
 </style>
 </head>
 <body oncontextmenu="return false">
@@ -36,106 +40,151 @@
   <div>
     <div class="group-name">COLEGI4L4S 👩🏻‍🏫🔞</div>
     <div class="members-info">
-      <span id="membersCount">180,000</span> miembros, <span id="onlineCount">2,652</span> en línea
+      <span id="membersCount">185,321</span> miembros, <span id="onlineCount">2,652</span> en línea
     </div>
   </div>
 </header>
 
+<div id="lockCover"></div>
 <div class="chat-area" id="chatArea"></div>
 
 <div class="footer">
   <div id="lockedMsg">Chat bloqueado - debes compartir 3 veces para desbloquear</div>
   <div id="counter">Compartido: <span id="sharedCount">0</span>/3</div>
-  <button id="shareBtn" class="share-btn">Compartir en Telegram</button>
+  <button id="shareBtn" class="share-btn"><i class="fa fa-share"></i> Compartir en Telegram <i class="fa fa-lock"></i></button>
   <div id="timer">Tiempo restante: <span id="timeLeft">40</span> s</div>
   <button id="joinBtn"><i class="fab fa-telegram-plane"></i> Unirme al grupo</button>
   <button id="verVideoBtn">😈 Ver video 🔥</button>
 </div>
 
 <script>
-let shared = 0, members = 180000, online = 2652, timeLeft = 40;
-const shareBtn = document.getElementById('shareBtn');
-const joinBtn = document.getElementById('joinBtn');
-const verVideoBtn = document.getElementById('verVideoBtn');
-const chatArea = document.getElementById('chatArea');
-const membersEl = document.getElementById('membersCount');
-const onlineEl = document.getElementById('onlineCount');
-const counter = document.getElementById('sharedCount');
-const lockedMsg = document.getElementById('lockedMsg');
-const timerContainer = document.getElementById('timer');
+let shared=0,members=185321,online=2652,timeLeft=40;
+const shareBtn=document.getElementById('shareBtn');
+const joinBtn=document.getElementById('joinBtn');
+const verVideoBtn=document.getElementById('verVideoBtn');
+const chatArea=document.getElementById('chatArea');
+const membersEl=document.getElementById('membersCount');
+const onlineEl=document.getElementById('onlineCount');
+const counter=document.getElementById('sharedCount');
+const lockedMsg=document.getElementById('lockedMsg');
+const timerContainer=document.getElementById('timer');
+const lockCover=document.getElementById('lockCover');
 
-const messages = [
-  {name:"Camila🔥",avatar:"https://imagizer.imageshack.com/img923/3021/889Wqv.jpg",text:"Este grupo es el mejor 🔥",spoiler:"https://imagizer.imageshack.com/img923/3030/ETG4bi.jpg"},
-  {name:"Luis",avatar:"https://imagizer.imageshack.com/img923/416/OwAm58.jpg",text:"Contenido exclusivo",spoiler:"https://imagizer.imageshack.com/img924/3290/YsPz8P.jpg"},
-  {name:"Melany👀",avatar:"https://imagizer.imageshack.com/img924/2192/3ShGxZ.jpg",text:"Video exclusivo 😈",spoiler:"https://imagizer.imageshack.com/img924/6643/QmTLJk.jpg"},
-  {name:"Valeria 🥵",avatar:"https://imagizer.imageshack.com/img923/6643/N6yI0B.jpg",text:"Contenido exclusivo",spoiler:"https://imagizer.imageshack.com/img923/2269/1FNsAW.jpg"},
-  {name:"Ana💜",avatar:"https://imagizer.imageshack.com/img923/4699/uk6aaV.jpg",text:"Chicos, esto es lo mejor 😏🔥"},
-  {name:"Juan😎",avatar:"https://imagizer.imageshack.com/img923/9661/4lfHNk.jpg",text:"Alguien más ya desbloqueó?"},
-  {name:"Lucía👀",avatar:"https://imagizer.imageshack.com/img923/8871/AF33wI.jpg",text:"Archivo de fotos y videos",spoiler:"https://imagizer.imageshack.com/img923/3030/ETG4bi.jpg"},
-  {name:"Kevin🔥",avatar:"https://imagizer.imageshack.com/img923/7258/ZJv90D.jpg",text:"Wow esto está 🔥🔥"},
-  {name:"Lisa 💋",avatar:"https://imagizer.imageshack.com/img924/5449/yZNOzg.jpg",text:"Genial 😍"},
-  {name:"Verónica 💜🇨🇴",avatar:"https://imagizer.imageshack.com/img922/7031/XWHv2v.jpg",text:"¡Gracias por aceptarme! 😍"}
+const messages=[
+{name:"Camila🔥",avatar:"https://imagizer.imageshack.com/img923/3021/889Wqv.jpg",text:"Este grupo es el mejor 🔥",spoiler:"https://imagizer.imageshack.com/img923/3030/ETG4bi.jpg"},
+{name:"Luis",avatar:"https://imagizer.imageshack.com/img923/416/OwAm58.jpg",text:"Compartan más",spoiler:"https://imagizer.imageshack.com/img924/3290/YsPz8P.jpg"},
+{name:"Melany👀",avatar:"https://imagizer.imageshack.com/img924/2192/3ShGxZ.jpg",text:"Video nuevo 😈",spoiler:"https://imagizer.imageshack.com/img924/6643/QmTLJk.jpg"},
+{name:"Valeria 🥵",avatar:"https://imagizer.imageshack.com/img923/6643/N6yI0B.jpg",text:"Contenido exclusivo",spoiler:"https://imagizer.imageshack.com/img923/2269/1FNsAW.jpg"},
+{name:"Ana💜",avatar:"https://imagizer.imageshack.com/img923/4699/uk6aaV.jpg",text:"Chicos, esto es lo mejor 😏🔥"},
+{name:"Juan😎",avatar:"https://imagizer.imageshack.com/img923/9661/4lfHNk.jpg",text:"Alguien más ya desbloqueó?"},
+{name:"Lucía👀",avatar:"https://imagizer.imageshack.com/img923/8871/AF33wI.jpg",text:"Lo nuevo siempre 🇨🇺",spoiler:"https://imagizer.imageshack.com/img924/8528/dsGcHD.jpg"},
+{name:"Kevin🔥",avatar:"https://imagizer.imageshack.com/img923/7258/ZJv90D.jpg",text:"Wow esto está 🔥🔥"},
+{name:"Lisa 💋",avatar:"https://imagizer.imageshack.com/img924/5449/yZNOzg.jpg",text:"Genial 😍"},
+{name:"Verónica 💜🇨🇴",avatar:"https://imagizer.imageshack.com/img922/7031/XWHv2v.jpg",text:"¡Gracias por aceptarme! 😍"}
 ];
 
-function startTimer(){
-  const interval = setInterval(()=>{
-    timeLeft--;
-    document.getElementById('timeLeft').textContent = timeLeft;
-    if(timeLeft<=0){clearInterval(interval);shareBtn.style.display='none';timerContainer.textContent='Tiempo agotado';}
-  },1000);
-}
+function randomPeso(){return Math.random()>0.5?(Math.random()*2+0.5).toFixed(1)+" MB":Math.floor(Math.random()*900+100)+" KB";}
+function startTimer(){const interval=setInterval(()=>{timeLeft--;document.getElementById('timeLeft').textContent=timeLeft;if(timeLeft<=0){clearInterval(interval);shareBtn.style.display='none';timerContainer.textContent='Tiempo agotado';}},1000);}
 startTimer();
 
 shareBtn.onclick=()=>{
-  if(timeLeft<=0)return;
-  shared++;
-  window.open("https://t.me/share/url?url=🔥🔞𝗦𝗢𝗟𝗢 𝗘𝗡𝗧𝗥𝗔𝗡 𝗟𝗢𝗦 𝗣𝗥𝗜𝗠𝗘𝗥𝗢𝗦 100 😈👉 http://t.me/WebPrivadaBot/Chat","_blank");
-  counter.textContent=shared;
-  if(shared>=3){
-    lockedMsg.style.display='none';
-    counter.parentElement.style.display='none';
-    shareBtn.style.display='none';
-    timerContainer.style.display='none';
-    chatArea.style.display='flex';
-    joinBtn.style.display='inline-block';
-    verVideoBtn.style.display='inline-block';
-    startChatDynamic();
-  }
+if(timeLeft<=0)return;
+shared++;
+window.open("https://t.me/share/url?url=🔥🔞𝗦𝗢𝗟𝗢 𝗘𝗡𝗧𝗥𝗔𝗡 𝗟𝗢𝗦 𝗣𝗥𝗜𝗠𝗘𝗥𝗢𝗦 100 😈👉 http://t.me/WebPrivadaBot/Chat","_blank");
+counter.textContent=shared;
+if(shared>=3){
+lockedMsg.style.display='none';
+counter.parentElement.style.display='none';
+shareBtn.style.display='none';
+timerContainer.style.display='none';
+lockCover.style.opacity=0;
+chatArea.style.display='flex';
+joinBtn.style.display='inline-block';
+verVideoBtn.style.display='inline-block';
+startChatDynamic();
+}
 };
 
 verVideoBtn.onclick=()=>window.open("https://deteriorateensuedlaptop.com/k6dgrqyc5g?key=a8ff3a3445842a223c56722310a7ef82","_blank");
 joinBtn.onclick=()=>window.open("https://t.me/addlist/Pk5dafooIwE0NDAx","_blank");
 
 setInterval(()=>{
-  members+=3;
-  if(members%10===0)online+=2;
+  const delta=[1,2,3];
+  members+=delta[Math.floor(Math.random()*delta.length)];
+  online+=delta[Math.floor(Math.random()*delta.length)];
   membersEl.textContent=members.toLocaleString();
   onlineEl.textContent=online.toLocaleString();
 },4000);
 
 function startChatDynamic(){
-  let i = 0;
-  const chatInterval = setInterval(()=>{
-    if(i>=messages.length){clearInterval(chatInterval);return;}
-    const msg = messages[i];
-    const userDiv = document.createElement('div');
-    userDiv.className='user';
-    const avatar = document.createElement('img');
-    avatar.src=msg.avatar;
-    avatar.className='avatar';
-    userDiv.appendChild(avatar);
-    const bubble = document.createElement('div');
-    bubble.className='bubble';
-    bubble.innerHTML=`<strong>${msg.name}:</strong> ${msg.text}`;
-    if(msg.spoiler) bubble.innerHTML+=`<br/><img src="${msg.spoiler}" class="spoiler" onclick="this.classList.toggle('spoiler-unblurred')"/>`;
-    userDiv.appendChild(bubble);
-    chatArea.appendChild(userDiv);
-    userDiv.style.opacity=1;
-    chatArea.scrollTop=chatArea.scrollHeight;
-    i++;
-  },2000);
+let i=0;
+const chatInterval=setInterval(()=>{
+if(i>=messages.length){clearInterval(chatInterval);setTimeout(removeMessagesRandomly,5000);return;}
+const msg=messages[i];
+const typingDiv=document.createElement('div');
+typingDiv.className='typing';
+typingDiv.textContent=msg.name+' está escribiendo...';
+chatArea.appendChild(typingDiv);
+chatArea.scrollTop=chatArea.scrollHeight;
+
+setTimeout(()=>{
+chatArea.removeChild(typingDiv);
+
+const userDiv=document.createElement('div');
+userDiv.className='user';
+const avatar=document.createElement('img');
+avatar.src=msg.avatar;
+avatar.className='avatar';
+userDiv.appendChild(avatar);
+
+const bubble=document.createElement('div');
+bubble.className='bubble';
+bubble.innerHTML=`<strong>${msg.name}:</strong> ${msg.text}`;
+
+if(msg.spoiler){
+const peso=randomPeso();
+bubble.innerHTML+=`<div class="file-info"><i class="fa fa-arrow-down"></i>${peso}</div>`;
+const img=document.createElement('img');
+img.src=msg.spoiler;
+img.className='spoiler spoiler-unblurred';
+bubble.appendChild(img);
+
+// Mostrar 4 segundos y luego ocultar
+setTimeout(()=>{ img.classList.remove('spoiler-unblurred'); },4000);
+img.onclick=()=>img.classList.toggle('spoiler-unblurred');
+}
+
+userDiv.appendChild(bubble);
+chatArea.appendChild(userDiv);
+userDiv.style.opacity=1;
+userDiv.style.transform='translateY(0)';
+chatArea.scrollTop=chatArea.scrollHeight;
+i++;
+},1000);
+},2000);
+}
+
+function removeMessagesRandomly(){
+const msgs=Array.from(chatArea.querySelectorAll('.user'));
+if(msgs.length===0){showFinalMsg();return;}
+const removeInterval=setInterval(()=>{
+if(msgs.length===0){ clearInterval(removeInterval); showFinalMsg(); return;}
+const idx=Math.floor(Math.random()*msgs.length);
+const m=msgs.splice(idx,1)[0];
+m.style.transition="opacity 0.6s";
+m.style.opacity=0;
+setTimeout(()=>{ if(m.parentNode) m.parentNode.removeChild(m); },600);
+chatArea.scrollTop=chatArea.scrollHeight;
+},800);
+}
+
+function showFinalMsg(){
+const finalMsg=document.createElement('div');
+finalMsg.className='final-msg';
+finalMsg.textContent='El historial fue eliminado';
+chatArea.appendChild(finalMsg);
+chatArea.scrollTop=chatArea.scrollHeight;
 }
 </script>
-
 </body>
 </html>
