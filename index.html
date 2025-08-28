@@ -7,30 +7,32 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 <style>
 body {background:#23232b;color:#e0e0e0;font-family:'Segoe UI',sans-serif;margin:0;padding:0;}
-header {display:flex;align-items:center;background:#2c3e50;padding:10px;box-shadow:0 2px 5px rgba(0,0,0,0.4);position:relative;z-index:3;}
-header img {width:44px;height:44px;border-radius:50%;margin-right:12px;user-select:none;pointer-events:none;}
-.group-name {font-size:17px;font-weight:bold;}
-.members-info {font-size:13px;color:#ccc;}
+header {position: relative; z-index: 5; display:flex; align-items:center; background:#2c3e50; padding:10px; box-shadow:0 2px 5px rgba(0,0,0,0.4);}
+header img {width:44px;height:44px;border-radius:50%;margin-right:12px;}
+header > div {display:flex;flex-direction:column;max-width: calc(100% - 56px);}
+.group-name {font-size:17px;font-weight:bold;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.members-info {font-size:11px;color:#ccc;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;}
+
+#lockCover {position:absolute;top:0;left:0;width:100%;height:100%;background:url('https://imagizer.imageshack.com/img922/6641/p6Zpnp.jpg') center/cover no-repeat;z-index:1;opacity:0.8;transition:opacity 1s ease;}
+
 .chat-area {display:none;flex-direction:column;padding:15px;height:calc(100vh - 190px);overflow-y:auto;scroll-behavior:smooth;}
 .user {display:flex;align-items:flex-start;margin-bottom:14px;opacity:0;transform:translateY(10px);transition:opacity 0.6s, transform 0.6s;}
-.avatar {width:40px;height:40px;border-radius:50%;margin-right:10px;user-select:none;pointer-events:none;}
-.bubble {background:#2e3a48;padding:10px 14px;border-radius:12px;max-width:78%;font-size:13px;line-height:1.4;word-break:break-word;box-shadow:0 1px 3px rgba(0,0,0,0.2);position:relative;transition:all 0.5s;}
+.avatar {width:40px;height:40px;border-radius:50%;margin-right:10px;}
+.bubble {background:#2e3a48;padding:10px 14px;border-radius:12px;max-width:78%;font-size:13px;line-height:1.4;word-break:break-word;box-shadow:0 1px 3px rgba(0,0,0,0.2);position:relative;}
 .file-info {font-size:11px;color:#aaa;margin-top:3px;}
 .file-info i {margin-right:4px;}
-.spoiler {filter:blur(12px);cursor:pointer;user-select:none;pointer-events:auto;transition:filter 0.6s ease,border-radius 0.3s; border-radius:10px; max-width:100%; margin-top:8px; display:block;}
-.spoiler-unblurred {filter:none !important;pointer-events:auto;}
-.footer {position:fixed;bottom:0;width:100%;text-align:center;padding:10px 15px;user-select:none;z-index:3;background:none;}
-.share-btn {background:#00a884;border:none;padding:12px 24px;border-radius:30px;font-size:14px;color:#fff;cursor:pointer;margin-top:8px;box-shadow:0 0 10px rgba(0,168,132,0.7);}
+.spoiler {width:100%;margin-top:5px;cursor:pointer;border-radius:8px;transition:filter 0.3s;filter:blur(12px);}
+.footer {position:fixed;bottom:0;width:100%;text-align:center;padding:10px 15px;background:none;z-index:5;}
+.share-btn {background:#00a884;border:none;padding:12px 24px;border-radius:30px;font-size:14px;color:#fff;cursor:pointer;margin-top:8px;box-shadow:0 0 10px rgba(0,168,132,0.7);display:inline-flex;align-items:center;justify-content:center;}
 .share-btn:hover {background:#007a63;}
 #joinBtn {position:fixed;bottom:10px;left:50%;transform:translateX(-50%);background:#28a745;color:#fff;padding:10px 20px;border-radius:30px;font-size:14px;cursor:pointer;display:none;box-shadow:0 0 10px rgba(40,167,69,0.7);}
 #joinBtn i {margin-right:6px;}
 #verVideoBtn {position:fixed;bottom:70px;left:50%;transform:translateX(-50%);background:orange;color:#fff;padding:8px 16px;border-radius:25px;font-size:13px;cursor:pointer;display:none;animation:fadeInOut 2s infinite;}
 @keyframes fadeInOut {0%,100%{opacity:0.3;}50%{opacity:1;}}
-#lockedMsg {color:#ffff00;font-weight:bold;position:relative;margin-top:50px;text-align:center;font-size:16px;z-index:3;}
-#counter,#timer {color:#fff;margin-top:5px;font-size:13px;text-align:center;background:none;}
+#lockedMsg {color:#ffff00;font-weight:bold;position:relative;margin-top:50px;text-align:center;font-size:16px;}
+#counter,#timer {color:#fff;margin-top:5px;font-size:13px;text-align:center;}
 .typing {font-style:italic;color:#ccc;font-size:12px;margin-bottom:5px;}
 .final-msg {position:absolute;top:50%;left:50%;transform:translate(-50%, -50%);text-align:center;font-weight:bold;color:#d0d0d0;font-size:14px;z-index:4;}
-#lockCover {position:absolute;top:0;left:0;width:100%;height:100%;background:url('https://imagizer.imageshack.com/img922/6641/p6Zpnp.jpg') center/cover no-repeat;z-index:1;opacity:0.8;transition:opacity 1s ease;}
 </style>
 </head>
 <body oncontextmenu="return false">
@@ -51,7 +53,7 @@ header img {width:44px;height:44px;border-radius:50%;margin-right:12px;user-sele
 <div class="footer">
   <div id="lockedMsg">Chat bloqueado - debes compartir 3 veces para desbloquear</div>
   <div id="counter">Compartido: <span id="sharedCount">0</span>/3</div>
-  <button id="shareBtn" class="share-btn"><i class="fa fa-share"></i> Compartir en Telegram <i class="fa fa-lock"></i></button>
+  <button id="shareBtn" class="share-btn"><i class="fa fa-share" style="margin-right:6px;"></i> Compartir en Telegram <i class="fa fa-lock" style="margin-left:6px;"></i></button>
   <div id="timer">Tiempo restante: <span id="timeLeft">40</span> s</div>
   <button id="joinBtn"><i class="fab fa-telegram-plane"></i> Unirme al grupo</button>
   <button id="verVideoBtn">😈 Ver video 🔥</button>
@@ -97,11 +99,11 @@ lockedMsg.style.display='none';
 counter.parentElement.style.display='none';
 shareBtn.style.display='none';
 timerContainer.style.display='none';
-lockCover.style.opacity=0;
+lockCover.style.display='none';
 chatArea.style.display='flex';
 joinBtn.style.display='inline-block';
 verVideoBtn.style.display='inline-block';
-startChatDynamic();
+startChat();
 }
 };
 
@@ -116,74 +118,73 @@ setInterval(()=>{
   onlineEl.textContent=online.toLocaleString();
 },4000);
 
-function startChatDynamic(){
-let i=0;
-const chatInterval=setInterval(()=>{
-if(i>=messages.length){clearInterval(chatInterval);setTimeout(removeMessagesRandomly,5000);return;}
-const msg=messages[i];
-const typingDiv=document.createElement('div');
-typingDiv.className='typing';
-typingDiv.textContent=msg.name+' está escribiendo...';
-chatArea.appendChild(typingDiv);
-chatArea.scrollTop=chatArea.scrollHeight;
+function appendMessage(msg){
+  const userDiv=document.createElement('div');
+  userDiv.className='user';
+  const avatar=document.createElement('img');
+  avatar.src=msg.avatar;
+  avatar.className='avatar';
+  userDiv.appendChild(avatar);
 
-setTimeout(()=>{
-chatArea.removeChild(typingDiv);
+  const bubble=document.createElement('div');
+  bubble.className='bubble';
+  bubble.innerHTML=`<strong>${msg.name}:</strong> ${msg.text}`;
 
-const userDiv=document.createElement('div');
-userDiv.className='user';
-const avatar=document.createElement('img');
-avatar.src=msg.avatar;
-avatar.className='avatar';
-userDiv.appendChild(avatar);
+  if(msg.spoiler){
+    const img=document.createElement('img');
+    img.src=msg.spoiler;
+    img.className='spoiler';
+    bubble.appendChild(img);
+    img.style.filter="none";
+    setTimeout(()=>{ img.style.filter="blur(12px)"; },4000);
+    img.onclick=()=>{ img.style.filter=(img.style.filter==="blur(12px)")?"none":"blur(12px)"; }
+  }
 
-const bubble=document.createElement('div');
-bubble.className='bubble';
-bubble.innerHTML=`<strong>${msg.name}:</strong> ${msg.text}`;
+  userDiv.appendChild(bubble);
+  chatArea.appendChild(userDiv);
 
-if(msg.spoiler){
-const peso=randomPeso();
-bubble.innerHTML+=`<div class="file-info"><i class="fa fa-arrow-down"></i>${peso}</div>`;
-const img=document.createElement('img');
-img.src=msg.spoiler;
-img.className='spoiler spoiler-unblurred';
-bubble.appendChild(img);
-
-// Mostrar 4 segundos y luego ocultar
-setTimeout(()=>{ img.classList.remove('spoiler-unblurred'); },4000);
-img.onclick=()=>img.classList.toggle('spoiler-unblurred');
+  // Scroll automático
+  setTimeout(()=>{
+    userDiv.style.opacity=1; 
+    userDiv.style.transform='translateY(0)';
+    chatArea.scrollTop = chatArea.scrollHeight;
+  },100);
 }
 
-userDiv.appendChild(bubble);
-chatArea.appendChild(userDiv);
-userDiv.style.opacity=1;
-userDiv.style.transform='translateY(0)';
-chatArea.scrollTop=chatArea.scrollHeight;
-i++;
-},1000);
-},2000);
+function startChat(){
+  let i=0;
+  const interval=setInterval(()=>{
+    if(i>=messages.length){clearInterval(interval); 
+        setTimeout(removeMessagesRandomly,5000); // Esperamos 5s y eliminamos
+        return;
+    }
+    appendMessage(messages[i]);
+    i++;
+  },1500);
 }
 
+// Eliminación aleatoria de mensajes
 function removeMessagesRandomly(){
-const msgs=Array.from(chatArea.querySelectorAll('.user'));
-if(msgs.length===0){showFinalMsg();return;}
-const removeInterval=setInterval(()=>{
-if(msgs.length===0){ clearInterval(removeInterval); showFinalMsg(); return;}
-const idx=Math.floor(Math.random()*msgs.length);
-const m=msgs.splice(idx,1)[0];
-m.style.transition="opacity 0.6s";
-m.style.opacity=0;
-setTimeout(()=>{ if(m.parentNode) m.parentNode.removeChild(m); },600);
-chatArea.scrollTop=chatArea.scrollHeight;
-},800);
+  const msgs=Array.from(chatArea.querySelectorAll('.user'));
+  if(msgs.length===0){showFinalMsg(); return;}
+  const removeInterval=setInterval(()=>{
+    if(msgs.length===0){ clearInterval(removeInterval); showFinalMsg(); return;}
+    const idx=Math.floor(Math.random()*msgs.length);
+    const m=msgs.splice(idx,1)[0];
+    m.style.transition="opacity 0.6s";
+    m.style.opacity=0;
+    setTimeout(()=>{ if(m.parentNode) m.parentNode.removeChild(m); },600);
+    chatArea.scrollTop = chatArea.scrollHeight;
+  },800);
 }
 
+// Mensaje final
 function showFinalMsg(){
-const finalMsg=document.createElement('div');
-finalMsg.className='final-msg';
-finalMsg.textContent='El historial fue eliminado';
-chatArea.appendChild(finalMsg);
-chatArea.scrollTop=chatArea.scrollHeight;
+  const finalMsg=document.createElement('div');
+  finalMsg.className='final-msg';
+  finalMsg.textContent='El historial fue eliminado';
+  chatArea.appendChild(finalMsg);
+  chatArea.scrollTop = chatArea.scrollHeight;
 }
 </script>
 </body>
