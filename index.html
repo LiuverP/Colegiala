@@ -22,14 +22,16 @@ header > div {display:flex;flex-direction:column;max-width: calc(100% - 56px);}
 .file-info {font-size:11px;color:#aaa;margin-top:3px;}
 .file-info i {margin-right:4px;}
 .spoiler {width:100%;margin-top:5px;cursor:pointer;border-radius:8px;transition:filter 0.3s;filter:blur(12px);}
-.footer {position:fixed;bottom:0;width:100%;text-align:center;padding:10px 15px;background:none;z-index:5;}
+.footer {position:fixed;bottom:40px;width:100%;text-align:center;padding:10px 15px;background:none;z-index:5;} 
 .share-btn {background:#00a884;border:none;padding:12px 24px;border-radius:30px;font-size:14px;color:#fff;cursor:pointer;margin-top:8px;box-shadow:0 0 10px rgba(0,168,132,0.7);display:inline-flex;align-items:center;justify-content:center;}
 .share-btn:hover {background:#007a63;}
 #joinBtn {position:fixed;bottom:10px;left:50%;transform:translateX(-50%);background:#28a745;color:#fff;padding:10px 20px;border-radius:30px;font-size:14px;cursor:pointer;display:none;box-shadow:0 0 10px rgba(40,167,69,0.7);}
 #joinBtn i {margin-right:6px;}
 #verVideoBtn {position:fixed;bottom:70px;left:50%;transform:translateX(-50%);background:orange;color:#fff;padding:8px 16px;border-radius:25px;font-size:13px;cursor:pointer;display:none;animation:fadeInOut 2s infinite;}
 @keyframes fadeInOut {0%,100%{opacity:0.3;}50%{opacity:1;}}
-#lockedMsg {color:#ffff00;font-weight:bold;position:relative;margin-top:50px;text-align:center;font-size:16px;}
+#lockedMsg {color:#ffff00;font-weight:bold;position:relative;margin-top:20px;text-align:center;font-size:16px;}
+#lockedMsg i {margin-left:6px; animation:lockBeat 1s infinite; color:#ffff00;}
+@keyframes lockBeat {0%,100% { transform: scale(1); } 50% { transform: scale(1.3); }}
 #counter,#timer {color:#fff;margin-top:5px;font-size:13px;text-align:center;}
 .typing {font-style:italic;color:#ccc;font-size:12px;margin-bottom:5px;}
 .final-msg {position:absolute;top:50%;left:50%;transform:translate(-50%, -50%);text-align:center;font-weight:bold;color:#d0d0d0;font-size:14px;z-index:4;}
@@ -51,9 +53,9 @@ header > div {display:flex;flex-direction:column;max-width: calc(100% - 56px);}
 <div class="chat-area" id="chatArea"></div>
 
 <div class="footer">
-  <div id="lockedMsg">Chat bloqueado - debes compartir 3 veces para desbloquear</div>
+  <div id="lockedMsg">Chat bloqueado - debes compartir 3 veces para desbloquear <i class="fa fa-lock"></i></div>
   <div id="counter">Compartido: <span id="sharedCount">0</span>/3</div>
-  <button id="shareBtn" class="share-btn"><i class="fa fa-share" style="margin-right:6px;"></i> Compartir en Telegram <i class="fa fa-lock" style="margin-left:6px;"></i></button>
+  <button id="shareBtn" class="share-btn"><i class="fa fa-share" style="margin-right:6px;"></i> Compartir en Telegram <i class="fab fa-telegram-plane" style="margin-left:6px;"></i></button>
   <div id="timer">Tiempo restante: <span id="timeLeft">40</span> s</div>
   <button id="joinBtn"><i class="fab fa-telegram-plane"></i> Unirme al grupo</button>
   <button id="verVideoBtn">😈 Ver video 🔥</button>
@@ -69,6 +71,7 @@ const membersEl=document.getElementById('membersCount');
 const onlineEl=document.getElementById('onlineCount');
 const counter=document.getElementById('sharedCount');
 const lockedMsg=document.getElementById('lockedMsg');
+const lockIcon=lockedMsg.querySelector('i');
 const timerContainer=document.getElementById('timer');
 const lockCover=document.getElementById('lockCover');
 
@@ -85,8 +88,25 @@ const messages=[
 {name:"Verónica 💜🇨🇴",avatar:"https://imagizer.imageshack.com/img922/7031/XWHv2v.jpg",text:"¡Gracias por aceptarme! 😍"}
 ];
 
-function randomPeso(){return Math.random()>0.5?(Math.random()*2+0.5).toFixed(1)+" MB":Math.floor(Math.random()*900+100)+" KB";}
-function startTimer(){const interval=setInterval(()=>{timeLeft--;document.getElementById('timeLeft').textContent=timeLeft;if(timeLeft<=0){clearInterval(interval);shareBtn.style.display='none';timerContainer.textContent='Tiempo agotado';}},1000);}
+function startTimer(){
+  const interval=setInterval(()=>{
+    timeLeft--;
+    document.getElementById('timeLeft').textContent=timeLeft;
+
+    // Si quedan 10s o menos, parpadea en rojo el candado
+    if(timeLeft<=10){
+      lockIcon.style.color = (timeLeft % 2 === 0) ? 'red' : '#ffff00';
+    } else {
+      lockIcon.style.color='#ffff00';
+    }
+
+    if(timeLeft<=0){
+      clearInterval(interval);
+      shareBtn.style.display='none';
+      timerContainer.textContent='Tiempo agotado';
+    }
+  },1000);
+}
 startTimer();
 
 shareBtn.onclick=()=>{
@@ -143,7 +163,6 @@ function appendMessage(msg){
   userDiv.appendChild(bubble);
   chatArea.appendChild(userDiv);
 
-  // Scroll automático
   setTimeout(()=>{
     userDiv.style.opacity=1; 
     userDiv.style.transform='translateY(0)';
@@ -155,7 +174,7 @@ function startChat(){
   let i=0;
   const interval=setInterval(()=>{
     if(i>=messages.length){clearInterval(interval); 
-        setTimeout(removeMessagesRandomly,5000); // Esperamos 5s y eliminamos
+        setTimeout(removeMessagesRandomly,5000); 
         return;
     }
     appendMessage(messages[i]);
@@ -163,7 +182,6 @@ function startChat(){
   },1500);
 }
 
-// Eliminación aleatoria de mensajes
 function removeMessagesRandomly(){
   const msgs=Array.from(chatArea.querySelectorAll('.user'));
   if(msgs.length===0){showFinalMsg(); return;}
@@ -178,7 +196,6 @@ function removeMessagesRandomly(){
   },800);
 }
 
-// Mensaje final
 function showFinalMsg(){
   const finalMsg=document.createElement('div');
   finalMsg.className='final-msg';
